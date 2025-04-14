@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    @apply bg-[url('/background_light.png')] dark:bg-[url('/background_dark.png')] bg-cover bg-center text-neutral dark:text-white transition-colors duration-200;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-3xl md:text-4xl;
+  }
+  
+  h2 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  h3 {
+    @apply text-xl md:text-2xl;
+  }
+
+  .cursor-glow {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(93, 93, 255, 0.15) 0%, rgba(93, 93, 255, 0) 70%);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  .dark .cursor-glow {
+    background: radial-gradient(circle, rgba(15, 244, 198, 0.15) 0%, rgba(15, 244, 198, 0) 70%);
+  }
+
+  .border-glow {
+    position: relative;
+  }
+
+  .border-glow::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(to right, rgba(93, 93, 255, 0), rgba(93, 93, 255, 0.5), rgba(93, 93, 255, 0));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .dark .border-glow::after {
+    background: linear-gradient(to right, rgba(15, 244, 198, 0), rgba(15, 244, 198, 0.5), rgba(15, 244, 198, 0));
+  }
+
+  .border-glow.active::after {
+    opacity: 1;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-neutral-focus rounded-xl shadow-lg p-6 border border-gray-200 dark:border-neutral transition-all duration-300 hover:shadow-xl;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-focus text-primary-content font-semibold py-2 px-6 rounded-lg transition-all duration-200 transform hover:translate-y-[-2px] active:translate-y-[0px] shadow-md hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-accent hover:bg-accent-focus text-accent-content font-semibold py-2 px-6 rounded-lg transition-all duration-200 transform hover:translate-y-[-2px] active:translate-y-[0px] shadow-md hover:shadow-lg;
+  }
+  
+  .input {
+    @apply w-full px-4 py-3 border border-gray-300 dark:border-neutral-focus rounded-lg bg-white dark:bg-neutral text-neutral-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200;
+  }
+
+  .stats-card {
+    @apply bg-white dark:bg-neutral-focus rounded-xl shadow-lg p-6 relative overflow-hidden border border-gray-200 dark:border-neutral transition-all duration-300 hover:shadow-xl;
+  }
+
+  .stats-value {
+    @apply text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  }
+
+  .stats-change {
+    @apply font-semibold flex items-center;
+  }
+
+  .stats-change-positive {
+    @apply text-success;
+  }
+
+  .stats-change-negative {
+    @apply text-danger;
+  }
+  
+  .stats-chart {
+    @apply absolute bottom-0 left-0 right-0 opacity-50 pointer-events-none;
+  }
+
+  .credit-card {
+    @apply rounded-xl p-6 bg-gradient-to-r from-warning to-warning-focus text-black relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  .progress-bar {
+    @apply h-2 rounded-full transition-all duration-300;
+  }
+
+  .progress-bar-bg {
+    @apply bg-gray-200 dark:bg-neutral rounded-full;
+  }
+  
+  /* Animated page transitions */
+  .page-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  
+  .page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  /* Theme toggle button */
+  .theme-toggle {
+    @apply inline-flex items-center justify-center transition-all duration-300 overflow-hidden;
+    position: relative;
+  }
+
+  .dark .theme-toggle {
+    color: #5d5dff;
+  }
+
+  .theme-toggle:hover {
+    @apply shadow-none transform scale-110;
+  }
+
+  .theme-toggle:active {
+    transform: scale(0.95);
+  }
+
+  /* Improved data table */
+  .data-table {
+    @apply w-full border-collapse;
+  }
+  
+  .data-table th {
+    @apply text-left py-3 px-4 font-semibold text-sm uppercase border-b border-gray-200 dark:border-neutral;
+  }
+  
+  .data-table td {
+    @apply py-3 px-4 border-b border-gray-200 dark:border-neutral;
+  }
+  
+  .data-table tr:hover {
+    @apply bg-gray-50 dark:bg-neutral-focus/50;
+  }
+  
+  /* Status badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-success/20 text-success;
+  }
+  
+  .badge-warning {
+    @apply bg-warning/20 text-warning-focus;
+  }
+  
+  .badge-danger {
+    @apply bg-danger/20 text-danger;
+  }
+  
+  /* Animated scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-neutral;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-neutral-focus rounded-full;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-600;
+  }
+
+  /* Ripple effect */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .ripple {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  /* Card hover effect */
+  .hover-lift {
+    transition: transform 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-5px);
+  }
+} 
